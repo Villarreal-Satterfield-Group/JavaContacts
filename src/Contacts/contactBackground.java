@@ -3,6 +3,7 @@ package Contacts;
 import files.FileIO;
 import util.Input;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -17,6 +18,18 @@ public class contactBackground {
         String userPH = new Input().getString("Enter contact phone-number: ");
         Contact newContact = new Contact(userName, userPH);
         Files.write(contactFile, Arrays.asList(newContact.getName()+", "+newContact.getPhoneNumber()), StandardOpenOption.APPEND);
+    }
+
+    public static void deleteContact(Path contactFile, String numberToDelete) throws IOException {
+        List<String> fileContents = Files.readAllLines(contactFile);
+        List<String> modifiedList = new ArrayList<>();
+        for (String item : fileContents) {
+            //I want to remove the bread from the list.
+            if (String.valueOf(item.charAt(0)).equals(numberToDelete)) {
+                modifiedList.add(item);
+            }
+        }
+        Files.write(contactFile, modifiedList);
     }
 
     public static void directory(Path contactFile) throws Exception {
@@ -45,11 +58,9 @@ public class contactBackground {
 //                    }
                     break;
                 case 4:
-//                    for (Movie movie : MoviesArray.findAll()) {
-//                        if (movie.categoryGetter().equalsIgnoreCase("horror")) {
-//                            System.out.println(movie.nameGetter());
-//                        }
-//                    }
+                    FileIO.printFileContents(contactFile);
+                    String delete = new Input().getString("Enter contact number to delete (1, 2, 3, etc.): ");
+                    deleteContact(contactFile, delete);
                     break;
                 default:
                     break;
