@@ -1,10 +1,25 @@
 package Contacts;
 
+import files.FileIO;
 import util.Input;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class contactBackground {
 
-    public void directory() {
+    public static void contactAdd(Path contactFile) throws Exception {
+        String userName = new Input().getString("Enter contact name: ");
+        String userPH = new Input().getString("Enter contact phone-number: ");
+        Contact newContact = new Contact(userName, userPH);
+        Files.write(contactFile, Arrays.asList(newContact.getName()+", "+newContact.getPhoneNumber()), StandardOpenOption.APPEND);
+    }
+
+    public static void directory(Path contactFile) throws Exception {
         boolean toContinue;
         do {
             Input scanner = new Input();
@@ -17,16 +32,10 @@ public class contactBackground {
                     "Enter an option (1, 2, 3, 4, or 5): ");
             switch (answer) {
                 case 1:
-//                    for (Movie movie : MoviesArray.findAll()) {
-//                        System.out.println(movie.nameGetter() + " - " + movie.categoryGetter());
-//                    }
+                    FileIO.printFileContents(contactFile);
                     break;
                 case 2:
-//                    for (Movie movie : MoviesArray.findAll()) {
-//                        if (movie.categoryGetter().equalsIgnoreCase("animated")) {
-//                            System.out.println(movie.nameGetter());
-//                        }
-//                    }
+                    contactAdd(contactFile);
                     break;
                 case 3:
 //                    for (Movie movie : MoviesArray.findAll()) {

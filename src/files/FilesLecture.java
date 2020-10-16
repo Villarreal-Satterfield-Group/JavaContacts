@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FilesLecture {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         String directoryName = "data";
         String fileName = "grocery_list.txt";
 

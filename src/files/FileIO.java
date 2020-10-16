@@ -10,21 +10,23 @@ import java.util.List;
 public class FileIO {
 
 
-    public static Path createDirectoryAndFile(String directoryName, String fileName) throws IOException {
+    public static Path createDirectoryAndFile(String directoryName, String fileName) throws Exception {
         Path directoryPath = Paths.get(directoryName);
         Path dataFilePath = Paths.get(directoryName, fileName);
 
         //We have to create a directory first before we create the file.
+            if (Files.notExists(directoryPath)) {
+                Files.createDirectories(directoryPath);
+            }
 
-        if (Files.notExists(directoryPath)) {
-            Files.createDirectories(directoryPath);
-        }
+            if (!Files.exists(dataFilePath)) {
+                Files.createFile(dataFilePath);
+            }
 
-        if (!Files.exists(dataFilePath)) {
-            Files.createFile(dataFilePath);
-        }
+            return dataFilePath;
 
-        return dataFilePath;
+
+
     }
 
     public static void printFileContents(Path filePath) throws IOException {
