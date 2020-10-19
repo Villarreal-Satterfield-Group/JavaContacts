@@ -30,8 +30,13 @@ public class Input {
 
     public boolean yesNo(String prompt) {
         System.out.print(prompt);
-        String capture = scanner.nextLine();
-        return capture.equalsIgnoreCase("y") || capture.equalsIgnoreCase("yes");
+        String capture = getString();
+        if(capture.equalsIgnoreCase("y") || capture.equalsIgnoreCase("yes")){
+            return true;
+        } else {
+            System.err.println("\nInvalid response. Please try again.");
+           return yesNo(prompt);
+        }
     }
 
     public int getInt(int min, int max) {
@@ -72,7 +77,7 @@ public class Input {
 
     public int getInt(String prompt) {
         try {
-            System.out.println(prompt);
+            System.out.print(prompt);
             return Integer.parseInt(getString());
         } catch (NumberFormatException nfe) {
             System.err.println("Invalid input. Please try again.");
