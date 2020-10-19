@@ -32,9 +32,16 @@ public class FileIO {
     public static void printFileContents(Path filePath) throws IOException {
         System.out.println();
         List<String> fileContents = Files.readAllLines(filePath);
+//        int count = 0;
+//        for(String item: fileContents){
+//         item.replace(0,);
+//        }
+        System.out.println("Id  |  Name  |  Phone number \n----------------------------");
         for (int i = 0; i < fileContents.size(); i++) {
-            System.out.printf("%d: %s\n", i + 1, fileContents.get(i));
+            System.out.printf("%s\n", fileContents.get(i));
+
         }
+//        *we can rewrite this method to for loop thru contents and reassign ids on every print****
     }
 
     public static void updateLine(Path filePath, String oldValue, String newValue) throws IOException {
