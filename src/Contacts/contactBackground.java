@@ -16,16 +16,20 @@ public class contactBackground {
     public static void contactAdd(Path contactFile) throws Exception {
         String userName = new Input().getString("Enter contact name: ");
         String userPH = new Input().getString("Enter contact phone-number: ");
-        Contact newContact = new Contact(userName, userPH);
-        Files.write(contactFile, Arrays.asList(newContact.getName()+", "+newContact.getPhoneNumber()), StandardOpenOption.APPEND);
+        List<String> readables = Files.readAllLines(contactFile);
+        int count = 1;
+        for(String contact:readables){
+            count += 1;
+        }
+        Contact newContact = new Contact(userName, userPH, count);
+        Files.write(contactFile, Arrays.asList(newContact.getId()+ "  |  " + newContact.getName() + "  |  " + newContact.getPhoneNumber()), StandardOpenOption.APPEND);
     }
 
     public static void deleteContact(Path contactFile, String numberToDelete) throws IOException {
         List<String> fileContents = Files.readAllLines(contactFile);
         List<String> modifiedList = new ArrayList<>();
         for (String item : fileContents) {
-            //I want to remove the bread from the list.
-            if (String.valueOf(item.charAt(0)).equals(numberToDelete)) {
+            if (!item.startsWith(numberToDelete)){
                 modifiedList.add(item);
             }
         }
